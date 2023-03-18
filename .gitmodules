@@ -1,0 +1,4 @@
+[submodule "STM32CubeF3"]
+	path = STM32CubeF3
+	url = git@github.com:STMicroelectronics/STM32CubeF3.git
+	branch = master
