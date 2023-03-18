@@ -17,6 +17,12 @@ static void clock_init(void)
 {
 	RCC->CR |= RCC_CR_HSEBYP | RCC_CR_HSEON;
 	while ((RCC->CR & RCC_CR_HSERDY) == 0);
+
+	RCC->CFGR |= RCC_CFGR_SW_0; // 01: HSE selected as system clock
+	while ((RCC->CFGR & RCC_CFGR_SWS_0) == 0);
+
+	// RCC->CR |= RCC_CR_PLLON;
+	// while ((RCC->CR & RCC_CR_PLLRDY) == 0);
 }
 
 static void mydelay(void)
