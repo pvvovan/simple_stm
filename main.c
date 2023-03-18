@@ -13,6 +13,12 @@ static void gpio_init(void)
 	GPIOA->MODER |= GPIO_MODER_MODER5_0;  	// 0100 0000 0000 we put that value into moder
 }
 
+static void clock_init(void)
+{
+	RCC->CR |= RCC_CR_HSEBYP | RCC_CR_HSEON;
+	while ((RCC->CR & RCC_CR_HSERDY) == 0);
+}
+
 static void mydelay(void)
 {
 	for (volatile long i = 0; i < 1000000; i++);
@@ -20,6 +26,7 @@ static void mydelay(void)
 
 int main(void)
 {
+	clock_init();
 	gpio_init();
 
 	volatile float a = 0.1f;
