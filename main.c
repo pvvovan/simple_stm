@@ -15,14 +15,24 @@ static void gpio_init(void)
 
 static void clock_init(void)
 {
+	/* HSE */
 	RCC->CR |= RCC_CR_HSEBYP | RCC_CR_HSEON;
-	while ((RCC->CR & RCC_CR_HSERDY) == 0);
+	while ((RCC->CR & RCC_CR_HSERDY) == 0); // wait until HSE is ready
+	RCC->CFGR |= RCC_CFGR_SW_HSE; // 01: HSE selected as system clock
+	while ((RCC->CFGR & RCC_CFGR_SWS_HSE) == 0); // wait until HSE selected as system clock
 
-	RCC->CFGR |= RCC_CFGR_SW_0; // 01: HSE selected as system clock
-	while ((RCC->CFGR & RCC_CFGR_SWS_0) == 0);
+	/* FLASH */
+	FLASH->ACR|= FLASH_ACR_PRFTBE;		// enabling FLASH prefatch buffer
+	FLASH->ACR &= ~FLASH_ACR_LATENCY;	// set all bits to 0 (to ensure)
+	FLASH->ACR|= FLASH_ACR_LATENCY_2;	// Two wait sates, if 48 < HCLK ≤ 72 MHz
 
-	// RCC->CR |= RCC_CR_PLLON;
-	// while ((RCC->CR & RCC_CR_PLLRDY) == 0);
+	/* PLL */
+	RCC->CFGR |= RCC_CFGR_PLLMUL9; // 0111: PLL input clock x 9
+	RCC->CFGR |= RCC_CFGR_PLLSRC_HSE_PREDIV; // 10: HSE used as PREDIV1 entry
+	RCC->CR |= RCC_CR_PLLON;
+	while ((RCC->CR & RCC_CR_PLLRDY) == 0); // wait until PLL is ready
+	RCC->CFGR |= RCC_CFGR_SW_PLL; // 10: PLL selected as system clock
+	while ((RCC->CFGR & RCC_CFGR_SWS_PLL) == 0); // wait until PLL selected as system clock
 }
 
 static void mydelay(void)
