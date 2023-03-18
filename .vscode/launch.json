@@ -12,7 +12,7 @@
             "type": "cortex-debug",
             "runToEntryPoint": "main",
             "servertype": "openocd",
-            "gdbPath": "gdb-multiarch",
+            "gdbPath": "arm-none-eabi-gdb",
             "serverpath": "openocd",
             "configFiles": [
                 "interface/stlink.cfg",
