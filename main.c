@@ -22,9 +22,9 @@ int main(void)
 {
 	gpio_init();
 
-	volatile int a = 0;
+	volatile float a = 0.1f;
 	while(1) {
-		a++;
+		a += 0.1f;
 		mydelay();
 		GPIOA->ODR ^= GPIO_ODR_5;
 	}

@@ -1,4 +1,4 @@
-CC_FLAGS = -std=c99 -O0 -g3 -mfloat-abi=soft -mcpu=cortex-m4 -mthumb -gdwarf-2 \
+CC_FLAGS = -std=c99 -O0 -g3 -mfloat-abi=hard -mcpu=cortex-m4 -mthumb -gdwarf-2 \
 -Wall -Wextra -Wconversion -Wsign-conversion -Wpedantic -D STM32F303xE
 
 GCC_PATH = /home/elina/arm-gnu-toolchain-12.2.rel1-x86_64-arm-none-eabi/bin/

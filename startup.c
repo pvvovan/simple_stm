@@ -27,7 +27,17 @@ void init(void)
 __attribute__((naked)) void reset(void)
 {
 	__asm volatile ("bkpt #1");
+
+	__asm volatile ("cpsid i" : : : "memory"); // Disable IRQ interrupts by setting the I-bit in the CPSR
+	/* Enable FPU */
+	const uint32_t CPACR_Addr = 0xE000ED88UL;
+	volatile uint32_t *const CPACR = (volatile uint32_t *const)CPACR_Addr;
+	const uint32_t CP10_FullAccess = 3UL << (10 * 2);
+	const uint32_t CP11_FullAccess = 3UL << (11 * 2);
+	*CPACR |= CP10_FullAccess | CP11_FullAccess;
 	init();
+	__asm volatile ("cpsie i" : : : "memory"); // Enable IRQ interrupts by clearing the I-bit in the CPSR
+
 	main();
 	for(;;);
 }
