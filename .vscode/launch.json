@@ -32,7 +32,8 @@
                     "text": "-enable-pretty-printing",
                     "ignoreFailures": true
                 }
-            ]
+            ],
+            "svdPath": "${workspaceFolder}/STM32F303.svd"
         }
     ],
     "inputs": [
