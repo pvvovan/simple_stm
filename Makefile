@@ -1,4 +1,4 @@
-GCC_PATH = /mnt/sda1/pvv/gcc/arm-gnu-toolchain-13.3.rel1-x86_64-arm-none-eabi/bin/
+GCC_PATH = /home/vovan/mySTM/arm-gnu-toolchain-14.2.rel1-x86_64-arm-none-eabi/bin/
 
 CC_FLAGS = \
 	-std=c99 \
